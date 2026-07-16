@@ -10,13 +10,25 @@ html, body {
    mobile screens instead of the hero and footer overlapping. */
 .box {
     background-color: #ff6b81;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1px);
-    background-size: 20px 20px;
     position: relative;
+    isolation: isolate;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     min-height: 100dvh;
+}
+
+/* Dotted "net" behind the content, fading out toward the left/right edges */
+.box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1px);
+    background-size: 20px 20px;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 30%, #000 70%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 30%, #000 70%, transparent 100%);
 }
 
 .hero-area.main {
