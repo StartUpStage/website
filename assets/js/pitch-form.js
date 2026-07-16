@@ -33,6 +33,8 @@
             // phone screens; use the compact size there.
             if (window.innerWidth < 500) opts.size = "compact";
             widgetId = window.turnstile.render(turnstileEl, opts);
+            setTimeout(neutralizeOverflowIframes, 600);
+            setTimeout(neutralizeOverflowIframes, 2000);
         } else if ((retries || 0) < 25) {
             setTimeout(function () {
                 renderTurnstile((retries || 0) + 1);
@@ -44,6 +46,32 @@
         if (window.turnstile && widgetId !== null) {
             try { window.turnstile.reset(widgetId); } catch (e) {}
         }
+    }
+
+    // Safety net: Cloudflare/Turnstile can inject an iframe onto <body> that
+    // overflows the viewport and causes a horizontal scroll on mobile. Pin any
+    // stray iframe that sticks out past the viewport to 1x1 (it still works via
+    // postMessage; it doesn't need to be visible).
+    function neutralizeOverflowIframes() {
+        var frames = document.querySelectorAll("body > iframe, #pf-turnstile ~ iframe");
+        for (var i = 0; i < frames.length; i++) {
+            var f = frames[i];
+            if (turnstileEl && turnstileEl.contains(f)) continue; // keep the real widget
+            var r = f.getBoundingClientRect();
+            if (r.right > window.innerWidth + 1 || r.left < -1 || r.width > window.innerWidth) {
+                f.style.setProperty("position", "fixed", "important");
+                f.style.setProperty("left", "0", "important");
+                f.style.setProperty("top", "0", "important");
+                f.style.setProperty("width", "1px", "important");
+                f.style.setProperty("height", "1px", "important");
+                f.style.setProperty("opacity", "0", "important");
+                f.style.setProperty("pointer-events", "none", "important");
+            }
+        }
+    }
+    if (window.MutationObserver) {
+        new MutationObserver(neutralizeOverflowIframes)
+            .observe(document.body, { childList: true, subtree: true });
     }
 
     if (applyBtn) {
