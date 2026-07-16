@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+    <url>
+        <loc>https://www.startupstage.org/</loc>
+        <xhtml:link rel="alternate" hreflang="en-US" href="https://www.startupstage.org/"/>
+        <xhtml:link rel="alternate" hreflang="en-GB" href="https://www.startupstage.org/en-gb/"/>
+        <xhtml:link rel="alternate" hreflang="ru-KZ" href="https://www.startupstage.org/ru-kz/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://www.startupstage.org/"/>
+    </url>
+
+    <url>
+        <loc>https://www.startupstage.org/en-gb/</loc>
+        <xhtml:link rel="alternate" hreflang="en-US" href="https://www.startupstage.org/"/>
+        <xhtml:link rel="alternate" hreflang="en-GB" href="https://www.startupstage.org/en-gb/"/>
+        <xhtml:link rel="alternate" hreflang="ru-KZ" href="https://www.startupstage.org/ru-kz/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://www.startupstage.org/"/>
+    </url>
+
+    <url>
+        <loc>https://www.startupstage.org/ru-kz/</loc>
+        <xhtml:link rel="alternate" hreflang="en-US" href="https://www.startupstage.org/"/>
+        <xhtml:link rel="alternate" hreflang="en-GB" href="https://www.startupstage.org/en-gb/"/>
+        <xhtml:link rel="alternate" hreflang="ru-KZ" href="https://www.startupstage.org/ru-kz/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://www.startupstage.org/"/>
+    </url>
+
+</urlset>

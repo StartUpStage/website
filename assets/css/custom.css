@@ -1,48 +1,98 @@
 html, body {
-    margin:0px;
+    margin: 0px;
+    overflow-x: hidden;
 }
 
+/* ============================= Layout ============================= */
+/* Full-height flex column: the hero grows and centres its content, the
+   footer sits below it. Content stays visible and can scroll on short /
+   mobile screens instead of the hero and footer overlapping. */
+.box {
+    background: #ff6b81;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.hero-area.main {
+    background: #ff6b81;
+    position: static;
+    transform: none;
+    flex: 1 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 90px 20px 40px;
+}
+
+.hero-area.main .hero-content {
+    text-align: center;
+    max-width: 100%;
+}
+
+/* Neutralise Bootstrap's grid gutters so the hero/footer never force
+   horizontal overflow on narrow screens. */
+.hero-area.main .container,
+.footer .container {
+    max-width: 100%;
+}
+.hero-area.main .row,
+.footer .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* The headline font is very wide, so scale it with the viewport to keep
+   "StartupStage" on one line without overflowing. */
 h1 {
-    font-size: 7rem !important;
-    line-height: 7rem !important;
+    font-size: clamp(2rem, 5.6vw, 7rem) !important;
+    line-height: 1.05 !important;
+    margin-bottom: 0.15em;
 }
 
 h2 {
     visibility: visible !important;
     color: #ffffff !important;
-    font-size: 5rem !important;
-    line-height: 5rem !important;
+    font-size: clamp(1.4rem, 5.6vw, 5rem) !important;
+    line-height: 1.1 !important;
+    overflow-wrap: anywhere;
 }
 
-@media only screen and (max-width: 600px) {
+/* On phones one line is too small to read — stack "Stage" under "Startup". */
+@media (max-width: 600px) {
     h1 {
-        font-size: 2.2rem !important;
-        line-height: 2.2rem !important;
+        font-size: clamp(1.8rem, 9.5vw, 3.4rem) !important;
     }
-
+    .hero-content h1 .blinking-cursor {
+        display: block;
+    }
     h2 {
-        visibility: visible !important;
-        color: #ffffff !important;
-        font-size: 0.8rem !important;
-        line-height: 0.8rem !important;
+        font-size: clamp(1.2rem, 6vw, 2rem) !important;
     }
 }
 
-.box {
-    background: #ff6b81;
-    position:absolute;
-    top:0px;
-    right:0px;
-    bottom:0px;
-    left:0px;
+/* JS-free entrance so the headline is never left hidden */
+.hero-content h1,
+.hero-content h2 {
+    animation: ssFadeIn 0.8s ease both;
 }
 
-.main {
-    background: #ff6b81;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.hero-content h2 {
+    animation-delay: 0.15s;
+}
+
+@keyframes ssFadeIn {
+    from { opacity: 0; transform: translateX(-24px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-content h1,
+    .hero-content h2 {
+        animation: none;
+    }
 }
 
 .blinking-cursor {
@@ -80,10 +130,11 @@ h2 {
 
 .footer {
     background: #ff6b81 !important;
-    position: fixed;
-    bottom: 0%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: static;
+    transform: none;
+    flex: 0 0 auto;
+    padding: 20px 20px 40px;
+    text-align: center;
 }
 
 .footer .copyright-text {
@@ -94,4 +145,116 @@ h2 {
     color: #ffffff !important;
     font-size: 30px;
     margin-right: 10px;
+}
+
+/* ============================= Language switcher ============================= */
+.language-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: inline-block;
+    font-family: inherit;
+}
+
+.language-switcher-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 0.85rem;
+    line-height: 1;
+    transition: background 0.25s, border-color 0.25s;
+}
+
+.language-switcher-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: #ffffff;
+}
+
+.language-switcher-btn svg {
+    transition: transform 0.3s;
+}
+
+.language-switcher.active .language-switcher-btn svg {
+    transform: rotate(180deg);
+}
+
+.language-dropdown {
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    right: 0;
+    min-width: 170px;
+    background: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
+    overflow: hidden;
+}
+
+.language-switcher.active .language-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.language-dropdown a {
+    display: block;
+    padding: 0.6rem 1rem;
+    text-decoration: none;
+    color: #333333;
+    font-size: 0.9rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+.language-dropdown a:hover {
+    background: #f4f4f4;
+}
+
+.language-dropdown a.active {
+    color: #ff6b81;
+    font-weight: 600;
+}
+
+/* Footer language switcher */
+.footer-language-switcher {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 20px;
+}
+
+.footer-language-switcher label {
+    color: #ffffff !important;
+    font-size: 0.9rem;
+}
+
+.footer-language-switcher select {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.footer-language-switcher select option {
+    color: #333333;
+}
+
+@media only screen and (max-width: 600px) {
+    .language-switcher-btn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.75rem;
+    }
 }

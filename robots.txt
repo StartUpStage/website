@@ -1,0 +1,7 @@
+# robots.txt for startupstage.org
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.startupstage.org/sitemap.xml
