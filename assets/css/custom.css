@@ -432,6 +432,9 @@ h2 {
     justify-content: center;
     margin: 6px 0 14px;
     min-height: 65px;
+    /* Never let the captcha widget exceed the form width / push the page */
+    max-width: 100%;
+    overflow: hidden;
 }
 
 /* Cloudflare injects a background challenge iframe as a direct child of
