@@ -28,9 +28,11 @@
     function renderTurnstile(retries) {
         if (!turnstileEl || widgetId !== null) return;
         if (window.turnstile && window.turnstile.render) {
-            widgetId = window.turnstile.render(turnstileEl, {
-                sitekey: turnstileEl.getAttribute("data-sitekey")
-            });
+            var opts = { sitekey: turnstileEl.getAttribute("data-sitekey") };
+            // The normal widget is a fixed 300px, which overflows narrow
+            // phone screens; use the compact size there.
+            if (window.innerWidth < 500) opts.size = "compact";
+            widgetId = window.turnstile.render(turnstileEl, opts);
         } else if ((retries || 0) < 25) {
             setTimeout(function () {
                 renderTurnstile((retries || 0) + 1);
