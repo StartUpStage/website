@@ -47,11 +47,17 @@
     if (applyBtn) {
         applyBtn.addEventListener("click", function () {
             applyBtn.hidden = true;
+            if (successEl) successEl.hidden = true;
             if (card) {
                 card.hidden = false;
                 card.scrollIntoView({ behavior: "smooth", block: "nearest" });
             }
-            renderTurnstile(0);
+            submitBtn.disabled = false;
+            status.className = "pitch-status";
+            status.textContent = "";
+            // Fresh token if the widget already exists, otherwise render it.
+            if (widgetId !== null) resetTurnstile();
+            else renderTurnstile(0);
             var first = document.getElementById("pf-name");
             if (first) first.focus();
         });
@@ -104,6 +110,8 @@
                         successEl.hidden = false;
                         successEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
                     }
+                    if (applyBtn) applyBtn.hidden = false;
+                    submitBtn.disabled = false;
                     form.reset();
                 } else {
                     showError(res.data && res.data.error === "captcha" ? "captcha" : "error");
