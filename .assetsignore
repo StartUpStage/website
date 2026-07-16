@@ -1,0 +1,13 @@
+# Files that should NOT be published to the site.
+# (Wrangler uploads the repo root as static assets.)
+
+.git
+.gitignore
+.assetsignore
+README.md
+build.sh
+build/
+wrangler.jsonc
+node_modules
+package.json
+package-lock.json

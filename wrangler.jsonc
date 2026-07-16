@@ -1,8 +1,8 @@
 {
-  "name": "www-startupstage-org",
+  "name": "website",
+  "compatibility_date": "2026-01-22",
   "assets": {
-    "directory": "./build",
+    "directory": ".",
     "not_found_handling": "404-page"
-  },
-  "compatibility_date": "2026-01-22"
+  }
 }
