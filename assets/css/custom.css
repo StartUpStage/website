@@ -434,6 +434,20 @@ h2 {
     min-height: 65px;
 }
 
+/* Cloudflare injects a background challenge iframe as a direct child of
+   <body>; pin it to 1x1 so it can never widen the page (the visible widget
+   lives inside .pf-turnstile and is unaffected). */
+body > iframe[src*="challenges.cloudflare.com"] {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 1px !important;
+    height: 1px !important;
+    border: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
 .pitch-btn {
     width: 100%;
     margin-top: 4px;
