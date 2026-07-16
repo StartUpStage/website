@@ -72,9 +72,13 @@
         <!-- Start Pitch Signup -->
         <section id="pitch" class="pitch-area">
             <div class="container">
-                <div class="pitch-inner">
+                <div class="pitch-intro">
+                    <p class="pitch-lead">Have a business idea — or already building one? Bring it to Startup Stage, present it, and let sharp questions make it stronger. Held in Almaty, Kazakhstan.</p>
+                    <button type="button" class="pitch-apply-btn" id="pitch-apply">Apply</button>
+                </div>
+
+                <div class="pitch-inner" id="pitch-card" hidden>
                     <h3>Join the pitching event</h3>
-                    <p class="pitch-sub">Have a business idea — or already building one? Bring it to Startup Stage, present it, and let sharp questions make it stronger. Held in Almaty, Kazakhstan.</p>
                     <form id="pitch-form" class="pitch-form" novalidate
                           data-msg-sending="Sending…"
                           data-msg-success="Thanks! We received your application."
@@ -97,10 +101,14 @@
                             <textarea id="pf-desc" name="description" rows="4" required maxlength="2000"></textarea>
                         </div>
                         <input type="text" name="website" class="pf-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
-                        <div class="cf-turnstile" data-sitekey="0x4AAAAAAD3I0EijTTst3jMQ"></div>
+                        <div class="pf-turnstile" id="pf-turnstile" data-sitekey="0x4AAAAAAD3I0EijTTst3jMQ"></div>
                         <button type="submit" class="pitch-btn">Submit</button>
                         <p class="pitch-status" role="status" aria-live="polite"></p>
                     </form>
+                </div>
+
+                <div class="pitch-success" id="pitch-success" hidden>
+                    Thanks! We received your application. We'll be in touch.
                 </div>
             </div>
         </section>

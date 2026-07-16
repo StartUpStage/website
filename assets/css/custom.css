@@ -265,6 +265,54 @@ h2 {
     padding: 20px 20px 40px;
 }
 
+/* Intro text + "Apply" button (on the pink background, above the form) */
+.pitch-intro {
+    max-width: 580px;
+    margin: 0 auto 22px;
+    text-align: center;
+}
+
+.pitch-lead {
+    color: #ffffff;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    margin: 0 0 20px;
+}
+
+.pitch-apply-btn {
+    padding: 0.7rem 2.2rem;
+    background: #ffffff;
+    color: #ff6b81;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.05s;
+}
+
+.pitch-apply-btn:hover {
+    background: #ffe9ee;
+}
+
+.pitch-apply-btn:active {
+    transform: translateY(1px);
+}
+
+/* Success message shown after a submission */
+.pitch-success {
+    max-width: 520px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 26px 24px;
+    text-align: center;
+    color: #1a7f37;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
 .pitch-inner {
     max-width: 520px;
     margin: 0 auto;
@@ -332,10 +380,12 @@ h2 {
     opacity: 0;
 }
 
-.cf-turnstile {
+.cf-turnstile,
+.pf-turnstile {
     display: flex;
     justify-content: center;
     margin: 6px 0 14px;
+    min-height: 65px;
 }
 
 .pitch-btn {

@@ -1,10 +1,18 @@
-// Pitch-signup form: submits to POST /api/pitch and shows status.
+// Pitch-signup flow:
+//  - "Apply" reveals the form (and renders Turnstile in a visible container)
+//  - submit -> POST /api/pitch
+//  - on success: hide the form, show the success message
 (function () {
     var form = document.getElementById("pitch-form");
     if (!form) return;
 
+    var card = document.getElementById("pitch-card");
+    var applyBtn = document.getElementById("pitch-apply");
+    var successEl = document.getElementById("pitch-success");
     var status = form.querySelector(".pitch-status");
-    var button = form.querySelector('button[type="submit"]');
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var turnstileEl = document.getElementById("pf-turnstile");
+    var widgetId = null;
 
     function msg(key, fallback) {
         return form.getAttribute("data-msg-" + key) || fallback;
@@ -15,14 +23,58 @@
         return el ? el.value.trim() : "";
     }
 
+    // Render Turnstile explicitly once the form is visible. Retries until the
+    // Turnstile script has loaded.
+    function renderTurnstile(retries) {
+        if (!turnstileEl || widgetId !== null) return;
+        if (window.turnstile && window.turnstile.render) {
+            widgetId = window.turnstile.render(turnstileEl, {
+                sitekey: turnstileEl.getAttribute("data-sitekey")
+            });
+        } else if ((retries || 0) < 25) {
+            setTimeout(function () {
+                renderTurnstile((retries || 0) + 1);
+            }, 200);
+        }
+    }
+
+    function resetTurnstile() {
+        if (window.turnstile && widgetId !== null) {
+            try { window.turnstile.reset(widgetId); } catch (e) {}
+        }
+    }
+
+    if (applyBtn) {
+        applyBtn.addEventListener("click", function () {
+            applyBtn.hidden = true;
+            if (card) {
+                card.hidden = false;
+                card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+            renderTurnstile(0);
+            var first = document.getElementById("pf-name");
+            if (first) first.focus();
+        });
+    }
+
+    function showError(key) {
+        status.textContent = msg(key, "Something went wrong. Please try again.");
+        status.classList.add("is-error");
+        submitBtn.disabled = false;
+        resetTurnstile();
+    }
+
     form.addEventListener("submit", function (event) {
         event.preventDefault();
 
         status.className = "pitch-status";
         status.textContent = msg("sending", "Sending…");
-        button.disabled = true;
+        submitBtn.disabled = true;
 
-        var tokenEl = form.querySelector('[name="cf-turnstile-response"]');
+        var token = "";
+        if (window.turnstile && widgetId !== null) {
+            token = window.turnstile.getResponse(widgetId) || "";
+        }
         var hp = form.querySelector('[name="website"]');
 
         var payload = {
@@ -32,7 +84,7 @@
             description: val("pf-desc"),
             website: hp ? hp.value : "",
             language: document.documentElement.lang || "",
-            turnstileToken: tokenEl ? tokenEl.value : ""
+            turnstileToken: token
         };
 
         fetch("/api/pitch", {
@@ -47,24 +99,18 @@
             })
             .then(function (res) {
                 if (res.ok && res.data && res.data.ok) {
-                    status.textContent = msg("success", "Thanks! We received your application.");
-                    status.classList.add("is-success");
+                    if (card) card.hidden = true;
+                    if (successEl) {
+                        successEl.hidden = false;
+                        successEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                    }
                     form.reset();
                 } else {
-                    var key = res.data && res.data.error === "captcha" ? "captcha" : "error";
-                    status.textContent = msg(key, "Something went wrong. Please try again.");
-                    status.classList.add("is-error");
+                    showError(res.data && res.data.error === "captcha" ? "captcha" : "error");
                 }
             })
             .catch(function () {
-                status.textContent = msg("error", "Something went wrong. Please try again.");
-                status.classList.add("is-error");
-            })
-            .then(function () {
-                button.disabled = false;
-                if (window.turnstile) {
-                    try { window.turnstile.reset(); } catch (e) {}
-                }
+                showError("error");
             });
     });
 })();

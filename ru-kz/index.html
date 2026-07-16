@@ -72,9 +72,13 @@
         <!-- Start Pitch Signup -->
         <section id="pitch" class="pitch-area">
             <div class="container">
-                <div class="pitch-inner">
+                <div class="pitch-intro">
+                    <p class="pitch-lead">Есть бизнес-идея — или вы уже над ней работаете? Приходите на Startup Stage, представьте её и сделайте сильнее с помощью острых вопросов. Проводится в Алматы, Казахстан.</p>
+                    <button type="button" class="pitch-apply-btn" id="pitch-apply">Подать заявку</button>
+                </div>
+
+                <div class="pitch-inner" id="pitch-card" hidden>
                     <h3>Заявка на участие в питчинге</h3>
-                    <p class="pitch-sub">Есть бизнес-идея — или вы уже над ней работаете? Приходите на Startup Stage, представьте её и сделайте сильнее с помощью острых вопросов. Проводится в Алматы, Казахстан.</p>
                     <form id="pitch-form" class="pitch-form" novalidate
                           data-msg-sending="Отправка…"
                           data-msg-success="Спасибо! Мы получили вашу заявку."
@@ -97,10 +101,14 @@
                             <textarea id="pf-desc" name="description" rows="4" required maxlength="2000"></textarea>
                         </div>
                         <input type="text" name="website" class="pf-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
-                        <div class="cf-turnstile" data-sitekey="0x4AAAAAAD3I0EijTTst3jMQ"></div>
+                        <div class="pf-turnstile" id="pf-turnstile" data-sitekey="0x4AAAAAAD3I0EijTTst3jMQ"></div>
                         <button type="submit" class="pitch-btn">Отправить</button>
                         <p class="pitch-status" role="status" aria-live="polite"></p>
                     </form>
+                </div>
+
+                <div class="pitch-success" id="pitch-success" hidden>
+                    Спасибо! Мы получили вашу заявку и свяжемся с вами.
                 </div>
             </div>
         </section>
