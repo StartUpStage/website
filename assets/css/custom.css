@@ -281,6 +281,9 @@ h2 {
 }
 
 .pitch-apply-btn {
+    display: block;
+    width: fit-content;
+    margin-left: auto;
     padding: 0.7rem 2.2rem;
     background: #ffffff;
     color: #ff6b81;
