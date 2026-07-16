@@ -69,6 +69,43 @@
         </section>
         <!-- End Hero Area -->
 
+        <!-- Start Pitch Signup -->
+        <section id="pitch" class="pitch-area">
+            <div class="container">
+                <div class="pitch-inner">
+                    <h3>Заявка на участие в питчинге</h3>
+                    <p class="pitch-sub">Расскажите о своём стартапе — и мы свяжемся с вами.</p>
+                    <form id="pitch-form" class="pitch-form" novalidate
+                          data-msg-sending="Отправка…"
+                          data-msg-success="Спасибо! Мы получили вашу заявку."
+                          data-msg-error="Что-то пошло не так. Попробуйте ещё раз."
+                          data-msg-captcha="Пожалуйста, пройдите проверку и попробуйте снова.">
+                        <div class="form-row">
+                            <label for="pf-name">Имя</label>
+                            <input type="text" id="pf-name" name="name" required maxlength="120" autocomplete="name" />
+                        </div>
+                        <div class="form-row">
+                            <label for="pf-email">Email</label>
+                            <input type="email" id="pf-email" name="email" required maxlength="200" autocomplete="email" />
+                        </div>
+                        <div class="form-row">
+                            <label for="pf-startup">Название стартапа</label>
+                            <input type="text" id="pf-startup" name="startup_name" required maxlength="160" />
+                        </div>
+                        <div class="form-row">
+                            <label for="pf-desc">Описание</label>
+                            <textarea id="pf-desc" name="description" rows="4" required maxlength="2000"></textarea>
+                        </div>
+                        <input type="text" name="website" class="pf-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+                        <div class="cf-turnstile" data-sitekey="0x4AAAAAAD3I0EijTTst3jMQ"></div>
+                        <button type="submit" class="pitch-btn">Отправить</button>
+                        <p class="pitch-status" role="status" aria-live="polite"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- End Pitch Signup -->
+
 
         <!-- Start Footer Area -->
         <footer class="footer">
@@ -101,7 +138,9 @@
     </div>
 
     <!-- ========================= JS here ========================= -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <script src="../assets/js/language.js"></script>
+    <script src="../assets/js/pitch-form.js"></script>
     <script>
         window.addEventListener('load', function () {
             window.setTimeout(function () {

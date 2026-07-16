@@ -258,3 +258,120 @@ h2 {
         font-size: 0.75rem;
     }
 }
+
+/* ============================= Pitch signup form ============================= */
+.pitch-area {
+    flex: 0 0 auto;
+    padding: 20px 20px 40px;
+}
+
+.pitch-inner {
+    max-width: 520px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 28px 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.pitch-inner h3 {
+    color: #333333;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    margin: 0 0 6px;
+    text-align: center;
+}
+
+.pitch-sub {
+    color: #666666;
+    text-align: center;
+    margin: 0 0 20px;
+    font-size: 0.95rem;
+}
+
+.form-row {
+    margin-bottom: 14px;
+}
+
+.form-row label {
+    display: block;
+    color: #333333;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+}
+
+.pitch-form input,
+.pitch-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: #333333;
+}
+
+.pitch-form input:focus,
+.pitch-form textarea:focus {
+    outline: none;
+    border-color: #ff6b81;
+}
+
+.pitch-form textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+/* Honeypot — hidden from users, visible to bots */
+.pf-hp {
+    position: absolute !important;
+    left: -9999px !important;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.cf-turnstile {
+    display: flex;
+    justify-content: center;
+    margin: 6px 0 14px;
+}
+
+.pitch-btn {
+    width: 100%;
+    margin-top: 4px;
+    padding: 0.7rem 1rem;
+    background: #ff6b81;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.pitch-btn:hover {
+    background: #ff566f;
+}
+
+.pitch-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.pitch-status {
+    margin: 12px 0 0;
+    text-align: center;
+    font-size: 0.9rem;
+    min-height: 1.2em;
+    color: #333333;
+}
+
+.pitch-status.is-success {
+    color: #1a7f37;
+}
+
+.pitch-status.is-error {
+    color: #c02626;
+}

@@ -11,3 +11,7 @@ wrangler.jsonc
 node_modules
 package.json
 package-lock.json
+
+# Worker source & DB migrations (deployed as code, not public assets)
+src
+migrations

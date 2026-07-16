@@ -1,8 +1,21 @@
 {
   "name": "www-startupstage-org",
+  "main": "src/worker.js",
   "compatibility_date": "2026-01-22",
   "assets": {
     "directory": ".",
+    "binding": "ASSETS",
     "not_found_handling": "404-page"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "startupstage_pitch",
+      "database_id": "d18f92b3-7619-4b88-81aa-df564bec1aae"
+    }
+  ],
+  "vars": {
+    "NOTIFY_EMAIL": "hi@paveltashev.com",
+    "EMAIL_FROM": "StartupStage <pitch@startupstage.org>"
   }
 }
