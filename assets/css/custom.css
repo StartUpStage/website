@@ -1,6 +1,7 @@
 html, body {
     margin: 0px;
     overflow-x: hidden;
+    background-color: #ff6b81;
 }
 
 /* ============================= Layout ============================= */
@@ -8,7 +9,9 @@ html, body {
    footer sits below it. Content stays visible and can scroll on short /
    mobile screens instead of the hero and footer overlapping. */
 .box {
-    background: #ff6b81;
+    background-color: #ff6b81;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1px);
+    background-size: 20px 20px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -17,7 +20,7 @@ html, body {
 }
 
 .hero-area.main {
-    background: #ff6b81;
+    background: transparent;
     position: static;
     transform: none;
     flex: 1 0 auto;
@@ -129,7 +132,7 @@ h2 {
 }
 
 .footer {
-    background: #ff6b81 !important;
+    background: transparent !important;
     position: static;
     transform: none;
     flex: 0 0 auto;
@@ -307,11 +310,11 @@ h2 {
 .pitch-success {
     max-width: 520px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     padding: 26px 24px;
     text-align: center;
-    color: #d63384;
+    color: #ff6b81;
     font-size: 1.05rem;
     line-height: 1.5;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
