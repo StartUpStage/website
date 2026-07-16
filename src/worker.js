@@ -2,7 +2,7 @@
 //
 // Serves the static site (via the ASSETS binding) and handles the
 // pitch-event signup API: POST /api/pitch
-//   -> validates input + Turnstile
+//   -> validates input + honeypot
 //   -> stores the row in D1 (source of truth)
 //   -> emails a notification via Resend (best-effort)
 
@@ -57,27 +57,6 @@ function validEmail(email) {
   return email.length <= 200 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-async function verifyTurnstile(token, ip, secret) {
-  if (!secret) return true; // not configured (e.g. local dev) -> skip
-  if (!token) return false;
-  const body = new URLSearchParams({ secret, response: token });
-  if (ip) body.set("remoteip", ip);
-  try {
-    const r = await fetch(
-      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body,
-      }
-    );
-    const out = await r.json();
-    return !!out.success;
-  } catch {
-    return false;
-  }
-}
-
 async function handlePitch(request, env, ctx) {
   const data = await readBody(request);
 
@@ -100,14 +79,6 @@ async function handlePitch(request, env, ctx) {
   }
 
   const ip = request.headers.get("CF-Connecting-IP") || "";
-  const passed = await verifyTurnstile(
-    data.turnstileToken,
-    ip,
-    env.TURNSTILE_SECRET_KEY
-  );
-  if (!passed) {
-    return json({ ok: false, error: "captcha" }, 400);
-  }
 
   // Store in D1 (source of truth).
   try {
