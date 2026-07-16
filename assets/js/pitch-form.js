@@ -108,13 +108,16 @@
             .then(function (res) {
                 if (res.ok && res.data && res.data.ok) {
                     if (card) card.hidden = true;
-                    if (successEl) {
-                        successEl.hidden = false;
-                        successEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
-                    }
+                    if (successEl) successEl.hidden = false;
                     if (applyBtn) applyBtn.hidden = false;
                     submitBtn.disabled = false;
                     form.reset();
+                    // Fully tear down Turnstile (removes the iframe it injects
+                    // into <body>, which can otherwise cause horizontal scroll).
+                    if (window.turnstile && widgetId !== null) {
+                        try { window.turnstile.remove(widgetId); } catch (e) {}
+                        widgetId = null;
+                    }
                 } else {
                     showError(res.data && res.data.error === "captcha" ? "captcha" : "error");
                 }
