@@ -16,6 +16,9 @@ html, body {
     flex-direction: column;
     min-height: 100vh;
     min-height: 100dvh;
+    /* Hard stop for any horizontal overflow (e.g. the Turnstile widget on
+       narrow screens). Clipping here is more reliable than at html/body. */
+    overflow-x: hidden;
 }
 
 /* Dotted "net" behind the content, fading out toward the left/right edges */
